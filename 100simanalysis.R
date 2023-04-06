@@ -164,3 +164,26 @@ pushlocfilter <- pushlocfilter[!pushlocfilter$X1 == 59, ]
 
 hist(pulllocfilter$X1, main = "Location of breaks in pull from ends (0 and 59 filtered)", breaks = 60)
 hist(pushlocfilter$X1, main = "Location of breaks in push from ends (0 and 59 filtered)", breaks = 60)
+
+
+#4/4/2023 moving_anchors + fixed_anchors 
+--------------------------------------------------------------------
+ 
+setwd("C:/Users/abonil/OneDrive - Michigan Medicine/Desktop/Cytosim extra files/040423/moving")
+moving <- read.csv("output.txt")
+row_length <- seq_len(nrow(moving))%% 4
+row_length <- moving[row_length == 1, ]
+clean_length <- row_length[ , colSums(is.na(row_length))==0]
+hist(clean_length, main = "Microtubule lengths in moving anchors", breaks = 250)
+
+
+setwd("C:/Users/abonil/OneDrive - Michigan Medicine/Desktop/Cytosim extra files/040423/fixed")
+fixed <- read.csv("output.txt")
+row_length <- seq_len(nrow(fixed))%% 4
+row_length <- fixed[row_length == 1, ]
+clean_length <- row_length[ , colSums(is.na(row_length))==0]
+hist(clean_length, main = "Microtubule lengths in fixed anchors", breaks = 250)
+
+#4/6/2022 report fiber num
+--------------------------------------------------------------------
+
