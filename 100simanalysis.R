@@ -11,7 +11,7 @@ ten <- read.csv("1-13-23/tension_pull/output.txt")
 
 #break location
 --------------------------------------------------------------------
-breakloc_12_0.5_pull <- read.csv("1-14-23/breakloc/12_0.5/Pull_from_ends/output.txt")
+  breakloc_12_0.5_pull <- read.csv("1-14-23/breakloc/12_0.5/Pull_from_ends/output.txt")
 breakloc_12_0.5_push <- read.csv("1-14-23/breakloc/12_0.5/Push_from_ends/output.txt")
 breakloc_12_0.5_ten <- read.csv("1-14-23/breakloc/12_0.5/tension_pull/output.txt")
 
@@ -38,7 +38,7 @@ hist(breakloc_24_0.25_ten$X1, main = "ten 24_0.25 breakloc")
 
 #Tension of break
 --------------------------------------------------------------------
-names(pull) <- c("Segment 1", "Segment 2", "Segment 3", "Segment 4", "Segment 5", "Segment 6", "Segment 7", "Segment 8", "Segment 9", "Segment 10", "Segment 11", "Segment 12")
+  names(pull) <- c("Segment 1", "Segment 2", "Segment 3", "Segment 4", "Segment 5", "Segment 6", "Segment 7", "Segment 8", "Segment 9", "Segment 10", "Segment 11", "Segment 12")
 names(push) <- c("Segment 1", "Segment 2", "Segment 3", "Segment 4", "Segment 5", "Segment 6", "Segment 7", "Segment 8", "Segment 9", "Segment 10", "Segment 11", "Segment 12")
 names(ten) <- c("Segment 1", "Segment 2", "Segment 3", "Segment 4", "Segment 5", "Segment 6", "Segment 7", "Segment 8", "Segment 9", "Segment 10", "Segment 11", "Segment 12") 
 
@@ -74,7 +74,7 @@ hist(push$Tension, breaks = 5, main="Tensions At Which Breaking Events Occurred 
 
 #2/2/2023
 --------------------------------------------------------------------
-breaklocpull <- read.csv("2-2-23/Break_locations/Pull_from_ends/output.txt")
+  breaklocpull <- read.csv("2-2-23/Break_locations/Pull_from_ends/output.txt")
 breaklocpush <- read.csv("2-2-23/Break_locations/Push_from_ends/output.txt")
 breaklocten <- read.csv("2-2-23/Break_locations/tension_pull/output.txt")
 
@@ -109,7 +109,7 @@ barplot(nobreakpushdata$y)
 
 #2/7/2023
 --------------------------------------------------------------------
-breaktenpull <- read.csv("2-7-2023/tensions/Pull_from_ends/output.txt")
+  breaktenpull <- read.csv("2-7-2023/tensions/Pull_from_ends/output.txt")
 breaktenpush <- read.csv("2-7-2023/tensions/Push_from_ends/output.txt")
 
 breaktenpullmean <- colMeans(breaktenpull)
@@ -127,7 +127,7 @@ ggqqplot(breaktenpushdata$y, main = "Mean tensions in push from ends (normality 
 
 #2/11/23
 --------------------------------------------------------------------
-library(data.table)
+  library(data.table)
 pull <- read.csv("2-11-23/Pull_from_ends/output.txt", col.names=c(1:60))
 pull = pull[-1,]
 #deleting first row as first break loc is cut off by file read -- fix later but not huge priority 
@@ -168,8 +168,8 @@ hist(pushlocfilter$X1, main = "Location of breaks in push from ends (0 and 59 fi
 
 #4/4/2023 moving_anchors + fixed_anchors 
 --------------------------------------------------------------------
- 
-setwd("C:/Users/abonil/OneDrive - Michigan Medicine/Desktop/Cytosim extra files/040423/moving")
+  
+  setwd("C:/Users/abonil/OneDrive - Michigan Medicine/Desktop/Cytosim extra files/040423/moving")
 moving <- read.csv("output.txt")
 row_length <- seq_len(nrow(moving))%% 4
 row_length <- moving[row_length == 1, ]
@@ -186,4 +186,97 @@ hist(clean_length, main = "Microtubule lengths in fixed anchors", breaks = 250)
 
 #4/6/2022 report fiber num
 --------------------------------------------------------------------
+install.packages("tidyverse")
+install.packages("stringr")
+install.packages("rlist")
+library(stringr)
+library(dplyr)
+library(rlist)
+
+fixed <- read.csv("fixedfibernum.txt")
+moving <- read.csv("movingfibernum.txt")
+
+x <- seq_len(nrow(fixed)) %% 4
+y <- seq_len(nrow(moving)) %% 4
+fixednum <- fixed[x == 2, ]
+movingnum <- moving[y == 2, ]
+
+
+for (i in 1:length(fixednum)){
+  temp <- str_split(as.character(fixednum[i]), "% report fiber:num", simplify = TRUE)
+  fixednum[i] <- as.numeric(temp[2])
+}
+
+for (i in 1:length(movingnum)){
+  temp <- str_split(as.character(movingnum[i]), "% report fiber:num", simplify = TRUE)
+  movingnum[i] <- as.numeric(temp[2])
+}
+
+fixeddf <- data.frame(fixednum)
+movingdf <- data.frame(movingnum)
+
+fixeddf <- mutate_all(fixeddf, function(x) as.numeric(as.character(x)))
+movingdf <- mutate_all(movingdf, function(x) as.numeric(as.character(x)))
+
+hist(fixeddf$fixednum, breaks = max(fixeddf))
+hist(movingdf$movingnum, breaks = max(movingdf))
+
+
+
+timefixeddf <- data.frame(matrix(ncol=251))
+
+newRow <- data.frame()
+
+initial <- TRUE
+
+for (i in 1:length(fixeddf$fixednum)){
+  index = 1 + (i %% 251)
+  newRow <- rbind(newRow, fixeddf$fixednum[i])
+  if (index == 1 & !initial){
+    newRow <- t(newRow)
+    colnames(newRow) <- colnames(timefixeddf)
+    timefixeddf <- rbind(newRow, timefixeddf)
+    newRow <- data.frame()
+  }
+  if(initial){
+    initial <- FALSE
+  }
+}
+
+timefixeddf <- timefixeddf %>% na.omit()
+
+timemovingdf <- data.frame(matrix(ncol=251))
+
+newRow <- data.frame()
+
+initial <- TRUE
+
+for (i in 1:length(movingdf$movingnum)){
+  index = 1 + (i %% 251)
+  newRow <- rbind(newRow, movingdf$movingnum[i])
+  if (index == 1 & !initial){
+    newRow <- t(newRow)
+    colnames(newRow) <- colnames(timemovingdf)
+    timemovingdf <- rbind(newRow, timemovingdf)
+    newRow <- data.frame()
+  }
+  if(initial){
+    initial <- FALSE
+  }
+}
+
+timemovingdf <- timemovingdf %>% na.omit()
+
+
+timemovingmean<- colMeans(timemovingdf)
+barplot(timemovingmean, ylim = range(pretty(c(0, timemovingmean))))
+
+timefixedmean <- colMeans(timefixeddf)
+barplot(timefixedmean, ylim = range(pretty(c(0, timefixedmean))))
+
+
+
+
+
+
 
