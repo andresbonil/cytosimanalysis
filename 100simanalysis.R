@@ -186,7 +186,7 @@ hist(clean_length, main = "Microtubule lengths in fixed anchors", breaks = 250)
 
 #4/6/2022 report fiber num
 --------------------------------------------------------------------
-install.packages("tidyverse")
+  install.packages("tidyverse")
 install.packages("stringr")
 install.packages("rlist")
 library(stringr)
@@ -275,8 +275,426 @@ timefixedmean <- colMeans(timefixeddf)
 barplot(timefixedmean, ylim = range(pretty(c(0, timefixedmean))))
 
 
+#4/18/2023
+--------------------------------------------------------------------
+library(stringr)
+library(dplyr)
+library(rlist)
+
+setwd("C:/Users/abonil/OneDrive - Michigan Medicine/Desktop/Cytosim extra files/041823/moving_anchors_05")
+
+moving_05 <- read.csv("fibernum.txt")
+x <- seq_len(nrow(moving_05)) %% 4
+moving_05 <- moving_05[x == 2, ]
+
+for (i in 1:length(moving_05)){
+  temp <- str_split(as.character(moving_05[i]), "% report fiber:num", simplify = TRUE)
+  moving_05[i] <- as.numeric(temp[2])
+}
+
+moving_05df <- data.frame(moving_05)
+timemovingdf <- data.frame(matrix(ncol=251))
+
+newRow <- data.frame()
+
+initial <- TRUE
+
+for (i in 1:length(moving_05df$moving_05)){
+  index = 1 + (i %% 251)
+  newRow <- rbind(newRow, moving_05df$moving_05[i])
+  if (index == 1 & !initial){
+    newRow <- t(newRow)
+    colnames(newRow) <- colnames(timemovingdf)
+    timemovingdf <- rbind(newRow, timemovingdf)
+    newRow <- data.frame()
+  }
+  if(initial){
+    initial <- FALSE
+  }
+}
+
+timemovingdf <- data.frame(timemovingdf)
+
+timemovingdf <- timemovingdf %>% na.omit()
+
+timemovingdf <- mutate_all(timemovingdf, function(x) as.numeric(as.character(x)))
+
+timemovingmean <- colMeans(timemovingdf)
+barplot(timemovingmean, ylim = range(pretty(c(0, timemovingmean))), main = "Moving anchors average breaks, rigidity 0.5")
+
+setwd("C:/Users/abonil/OneDrive - Michigan Medicine/Desktop/Cytosim extra files/041823/moving_anchors_1")
+
+moving_1 <- read.csv("fibernum.txt")
+x <- seq_len(nrow(moving_1)) %% 4
+moving_1 <- moving_1[x == 2, ]
+
+for (i in 1:length(moving_1)){
+  temp <- str_split(as.character(moving_1[i]), "% report fiber:num", simplify = TRUE)
+  moving_1[i] <- as.numeric(temp[2])
+}
+
+moving_1df <- data.frame(moving_1)
+timemovingdf <- data.frame(matrix(ncol=251))
+
+newRow <- data.frame()
+
+initial <- TRUE
+
+for (i in 1:length(moving_1df$moving_1)){
+  index = 1 + (i %% 251)
+  newRow <- rbind(newRow, moving_1df$moving_1[i])
+  if (index == 1 & !initial){
+    newRow <- t(newRow)
+    colnames(newRow) <- colnames(timemovingdf)
+    timemovingdf <- rbind(newRow, timemovingdf)
+    newRow <- data.frame()
+  }
+  if(initial){
+    initial <- FALSE
+  }
+}
+
+timemovingdf <- data.frame(timemovingdf)
+
+timemovingdf <- timemovingdf %>% na.omit()
+
+timemovingdf <- mutate_all(timemovingdf, function(x) as.numeric(as.character(x)))
+
+timemovingmean <- colMeans(timemovingdf)
+barplot(timemovingmean, ylim = range(pretty(c(0, timemovingmean))), main = "Moving anchors average breaks, rigidity 1")
+
+setwd("C:/Users/abonil/OneDrive - Michigan Medicine/Desktop/Cytosim extra files/041823/moving_anchors_5")
+
+moving_5 <- read.csv("fibernum.txt")
+x <- seq_len(nrow(moving_5)) %% 4
+moving_5 <- moving_5[x == 2, ]
+
+for (i in 1:length(moving_5)){
+  temp <- str_split(as.character(moving_5[i]), "% report fiber:num", simplify = TRUE)
+  moving_5[i] <- as.numeric(temp[2])
+}
+
+moving_5df <- data.frame(moving_5)
+timemovingdf <- data.frame(matrix(ncol=251))
+
+newRow <- data.frame()
+
+initial <- TRUE
+
+for (i in 1:length(moving_5df$moving_5)){
+  index = 1 + (i %% 251)
+  newRow <- rbind(newRow, moving_5df$moving_5[i])
+  if (index == 1 & !initial){
+    newRow <- t(newRow)
+    colnames(newRow) <- colnames(timemovingdf)
+    timemovingdf <- rbind(newRow, timemovingdf)
+    newRow <- data.frame()
+  }
+  if(initial){
+    initial <- FALSE
+  }
+}
+
+timemovingdf <- data.frame(timemovingdf)
+
+timemovingdf <- timemovingdf %>% na.omit()
+
+timemovingdf <- mutate_all(timemovingdf, function(x) as.numeric(as.character(x)))
+
+timemovingmean <- colMeans(timemovingdf)
+barplot(timemovingmean, ylim = range(pretty(c(0, timemovingmean))), main = "Moving anchors average breaks, rigidity 5")
 
 
+setwd("C:/Users/abonil/OneDrive - Michigan Medicine/Desktop/Cytosim extra files/041823/moving_anchors_10")
+
+moving_10 <- read.csv("fibernum.txt")
+x <- seq_len(nrow(moving_10)) %% 4
+moving_10 <- moving_10[x == 2, ]
+
+for (i in 1:length(moving_10)){
+  temp <- str_split(as.character(moving_10[i]), "% report fiber:num", simplify = TRUE)
+  moving_10[i] <- as.numeric(temp[2])
+}
+
+moving_10df <- data.frame(moving_10)
+timemovingdf <- data.frame(matrix(ncol=251))
+
+newRow <- data.frame()
+
+initial <- TRUE
+
+for (i in 1:length(moving_10df$moving_10)){
+  index = 1 + (i %% 251)
+  newRow <- rbind(newRow, moving_10df$moving_10[i])
+  if (index == 1 & !initial){
+    newRow <- t(newRow)
+    colnames(newRow) <- colnames(timemovingdf)
+    timemovingdf <- rbind(newRow, timemovingdf)
+    newRow <- data.frame()
+  }
+  if(initial){
+    initial <- FALSE
+  }
+}
+
+timemovingdf <- data.frame(timemovingdf)
+
+timemovingdf <- timemovingdf %>% na.omit()
+
+timemovingdf <- mutate_all(timemovingdf, function(x) as.numeric(as.character(x)))
+
+timemovingmean <- colMeans(timemovingdf)
+barplot(timemovingmean, ylim = range(pretty(c(0, timemovingmean))), main = "Moving anchors average breaks, rigidity 10")
 
 
+setwd("C:/Users/abonil/OneDrive - Michigan Medicine/Desktop/Cytosim extra files/041823/moving_anchors_20")
 
+moving_20 <- read.csv("fibernum.txt")
+x <- seq_len(nrow(moving_20)) %% 4
+moving_20 <- moving_20[x == 2, ]
+
+for (i in 1:length(moving_20)){
+  temp <- str_split(as.character(moving_20[i]), "% report fiber:num", simplify = TRUE)
+  moving_20[i] <- as.numeric(temp[2])
+}
+
+moving_20df <- data.frame(moving_20)
+timemovingdf <- data.frame(matrix(ncol=251))
+
+newRow <- data.frame()
+
+initial <- TRUE
+
+for (i in 1:length(moving_20df$moving_20)){
+  index = 1 + (i %% 251)
+  newRow <- rbind(newRow, moving_20df$moving_20[i])
+  if (index == 1 & !initial){
+    newRow <- t(newRow)
+    colnames(newRow) <- colnames(timemovingdf)
+    timemovingdf <- rbind(newRow, timemovingdf)
+    newRow <- data.frame()
+  }
+  if(initial){
+    initial <- FALSE
+  }
+}
+
+timemovingdf <- data.frame(timemovingdf)
+
+timemovingdf <- timemovingdf %>% na.omit()
+
+timemovingdf <- mutate_all(timemovingdf, function(x) as.numeric(as.character(x)))
+
+timemovingmean <- colMeans(timemovingdf)
+barplot(timemovingmean, ylim = range(pretty(c(0, timemovingmean))), main = "Moving anchors average breaks, rigidity 20")
+
+setwd("C:/Users/abonil/OneDrive - Michigan Medicine/Desktop/Cytosim extra files/041823/fixed_anchors_05")
+
+fixed_05 <- read.csv("fibernum.txt")
+x <- seq_len(nrow(fixed_05)) %% 4
+fixed_05 <- fixed_05[x == 2, ]
+
+for (i in 1:length(fixed_05)){
+  temp <- str_split(as.character(fixed_05[i]), "% report fiber:num", simplify = TRUE)
+  fixed_05[i] <- as.numeric(temp[2])
+}
+
+fixed_05df <- data.frame(fixed_05)
+timemovingdf <- data.frame(matrix(ncol=251))
+
+newRow <- data.frame()
+
+initial <- TRUE
+
+for (i in 1:length(fixed_05df$fixed_05)){
+  index = 1 + (i %% 251)
+  newRow <- rbind(newRow, fixed_05df$fixed_05[i])
+  if (index == 1 & !initial){
+    newRow <- t(newRow)
+    colnames(newRow) <- colnames(timemovingdf)
+    timemovingdf <- rbind(newRow, timemovingdf)
+    newRow <- data.frame()
+  }
+  if(initial){
+    initial <- FALSE
+  }
+}
+
+timemovingdf <- data.frame(timemovingdf)
+
+timemovingdf <- timemovingdf %>% na.omit()
+
+timemovingdf <- mutate_all(timemovingdf, function(x) as.numeric(as.character(x)))
+
+timemovingmean <- colMeans(timemovingdf)
+barplot(timemovingmean, ylim = range(pretty(c(0, timemovingmean))), main = "Fixed anchors average breaks, rigidity 0.5")
+
+setwd("C:/Users/abonil/OneDrive - Michigan Medicine/Desktop/Cytosim extra files/041823/fixed_anchors_1")
+
+fixed_1 <- read.csv("fibernum.txt")
+x <- seq_len(nrow(fixed_1)) %% 4
+fixed_1 <- fixed_1[x == 2, ]
+
+for (i in 1:length(fixed_1)){
+  temp <- str_split(as.character(fixed_1[i]), "% report fiber:num", simplify = TRUE)
+  fixed_1[i] <- as.numeric(temp[2])
+}
+
+fixed_1df <- data.frame(fixed_1)
+timemovingdf <- data.frame(matrix(ncol=251))
+
+newRow <- data.frame()
+
+initial <- TRUE
+
+for (i in 1:length(fixed_1df$fixed_1)){
+  index = 1 + (i %% 251)
+  newRow <- rbind(newRow, fixed_1df$fixed_1[i])
+  if (index == 1 & !initial){
+    newRow <- t(newRow)
+    colnames(newRow) <- colnames(timemovingdf)
+    timemovingdf <- rbind(newRow, timemovingdf)
+    newRow <- data.frame()
+  }
+  if(initial){
+    initial <- FALSE
+  }
+}
+
+timemovingdf <- data.frame(timemovingdf)
+
+timemovingdf <- timemovingdf %>% na.omit()
+
+timemovingdf <- mutate_all(timemovingdf, function(x) as.numeric(as.character(x)))
+
+timemovingmean <- colMeans(timemovingdf)
+barplot(timemovingmean, ylim = range(pretty(c(0, timemovingmean))), main = "Fixed anchors average breaks, rigidity 1")
+
+setwd("C:/Users/abonil/OneDrive - Michigan Medicine/Desktop/Cytosim extra files/041823/fixed_anchors_5")
+
+fixed_5 <- read.csv("fibernum.txt")
+x <- seq_len(nrow(fixed_5)) %% 4
+fixed_5 <- fixed_5[x == 2, ]
+
+for (i in 1:length(fixed_5)){
+  temp <- str_split(as.character(fixed_5[i]), "% report fiber:num", simplify = TRUE)
+  fixed_5[i] <- as.numeric(temp[2])
+}
+
+fixed_5df <- data.frame(fixed_5)
+timemovingdf <- data.frame(matrix(ncol=251))
+
+newRow <- data.frame()
+
+initial <- TRUE
+
+for (i in 1:length(fixed_5df$fixed_5)){
+  index = 1 + (i %% 251)
+  newRow <- rbind(newRow, fixed_5df$fixed_5[i])
+  if (index == 1 & !initial){
+    newRow <- t(newRow)
+    colnames(newRow) <- colnames(timemovingdf)
+    timemovingdf <- rbind(newRow, timemovingdf)
+    newRow <- data.frame()
+  }
+  if(initial){
+    initial <- FALSE
+  }
+}
+
+timemovingdf <- data.frame(timemovingdf)
+
+timemovingdf <- timemovingdf %>% na.omit()
+
+timemovingdf <- mutate_all(timemovingdf, function(x) as.numeric(as.character(x)))
+
+timemovingmean <- colMeans(timemovingdf)
+barplot(timemovingmean, ylim = range(pretty(c(0, timemovingmean))), main = "Fixed anchors average breaks, rigidity 5")
+
+
+setwd("C:/Users/abonil/OneDrive - Michigan Medicine/Desktop/Cytosim extra files/041823/fixed_anchors_10")
+
+fixed_10 <- read.csv("fibernum.txt")
+x <- seq_len(nrow(fixed_10)) %% 4
+fixed_10 <- fixed_10[x == 2, ]
+
+for (i in 1:length(fixed_10)){
+  temp <- str_split(as.character(fixed_10[i]), "% report fiber:num", simplify = TRUE)
+  fixed_10[i] <- as.numeric(temp[2])
+}
+
+fixed_10df <- data.frame(fixed_10)
+timemovingdf <- data.frame(matrix(ncol=251))
+
+newRow <- data.frame()
+
+initial <- TRUE
+
+for (i in 1:length(fixed_10df$fixed_10)){
+  index = 1 + (i %% 251)
+  newRow <- rbind(newRow, fixed_10df$fixed_10[i])
+  if (index == 1 & !initial){
+    newRow <- t(newRow)
+    colnames(newRow) <- colnames(timemovingdf)
+    timemovingdf <- rbind(newRow, timemovingdf)
+    newRow <- data.frame()
+  }
+  if(initial){
+    initial <- FALSE
+  }
+}
+
+timemovingdf <- data.frame(timemovingdf)
+
+timemovingdf <- timemovingdf %>% na.omit()
+
+timemovingdf <- mutate_all(timemovingdf, function(x) as.numeric(as.character(x)))
+
+timemovingmean <- colMeans(timemovingdf)
+barplot(timemovingmean, ylim = range(pretty(c(0, timemovingmean))), main = "Fixed anchors average breaks, rigidity 10")
+
+setwd("C:/Users/abonil/OneDrive - Michigan Medicine/Desktop/Cytosim extra files/041823/fixed_anchors_20")
+
+fixed_20 <- read.csv("fibernum.txt")
+x <- seq_len(nrow(fixed_20)) %% 4
+fixed_20 <- fixed_20[x == 2, ]
+
+for (i in 1:length(fixed_20)){
+  temp <- str_split(as.character(fixed_20[i]), "% report fiber:num", simplify = TRUE)
+  fixed_20[i] <- as.numeric(temp[2])
+}
+
+fixed_20df <- data.frame(fixed_20)
+timemovingdf <- data.frame(matrix(ncol=251))
+
+newRow <- data.frame()
+
+initial <- TRUE
+
+for (i in 1:length(fixed_20df$fixed_20)){
+  index = 1 + (i %% 251)
+  newRow <- rbind(newRow, fixed_20df$fixed_20[i])
+  if (index == 1 & !initial){
+    newRow <- t(newRow)
+    colnames(newRow) <- colnames(timemovingdf)
+    timemovingdf <- rbind(newRow, timemovingdf)
+    newRow <- data.frame()
+  }
+  if(initial){
+    initial <- FALSE
+  }
+}
+
+timemovingdf <- data.frame(timemovingdf)
+
+timemovingdf <- timemovingdf %>% na.omit()
+
+timemovingdf <- mutate_all(timemovingdf, function(x) as.numeric(as.character(x)))
+
+timemovingmean <- colMeans(timemovingdf)
+barplot(timemovingmean, ylim = range(pretty(c(0, timemovingmean))), main = "Fixed anchors average breaks, rigidity 20")
+
+pdf(file = "041923_plots.pdf")
+par( mfrow = c(2,2))
+
+plot(1:10)
